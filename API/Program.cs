@@ -14,6 +14,12 @@ builder.Services.AddDbContext<DataContext>(opts => {
     opts.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddCors(opts => {
+    opts.AddPolicy("CorsPolicy", policy => {
+        policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,8 +29,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthorization();
+app.UseCors("CorsPolicy");
 
+app.UseAuthorization();
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
@@ -42,5 +49,6 @@ catch (System.Exception ex)
     var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "An error occurred during migration");
 }
+
 
 app.Run();
