@@ -1,54 +1,63 @@
 import React, { useState } from "react";
-import { Button, Form, Segment } from "semantic-ui-react"
+import { Button, Form, Segment } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
 
 interface Props {
-  closeForm: () => void;
-  activity: Activity | undefined;
-  createOrEdit: (activity: Activity) => void;
+	closeForm: () => void;
+	activity: Activity | undefined;
+	createOrEdit: (activity: Activity) => void;
+	submitting: boolean;
 }
 
-export const ActivityForm = ({ closeForm, activity: selectedActivity, createOrEdit }: Props) => {
+export const ActivityForm = ({ 
+  closeForm, 
+  activity: selectedActivity,
+  createOrEdit, 
+  submitting 
+}: Props) => {
 
-  const initialState = selectedActivity ?? {
-    id: '',
-    title: '',
-    category: '',
-    description: '',
-    city: '',
-    venue: '',
-    date: ''
-  };
+	const initialState = selectedActivity ?? {
+		id: "",
+		title: "",
+		category: "",
+		description: "",
+		city: "",
+		venue: "",
+		date: "",
+	};
 
-  const [activity, setActivity] = useState(initialState);
+	const [activity, setActivity] = useState(initialState);
 
-  const handleSubmit = () => {
-    console.log(activity);
+	const handleSubmit = () => {
 
-    createOrEdit(activity);
+		createOrEdit(activity);
+	};
 
-  }
+	const handleInputChange = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+		const { name, value } = ev.currentTarget;
+		setActivity({
+			...activity,
+			[name]: value,
+		});
+	};
 
-  const handleInputChange = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = ev.currentTarget;
-    setActivity({
-      ...activity,
-      [name] : value
-    })
-  }
-
-  return (
-    <Segment clearing>
-      <Form onSubmit={handleSubmit} autoComplete='off'>
-        <Form.Input placeholder="Title" value={activity.title} name='title' onChange={handleInputChange} />
-        <Form.TextArea placeholder="Description" value={activity.description} name='description' onChange={handleInputChange} />
-        <Form.Input placeholder="Category" value={activity.category} name='category' onChange={handleInputChange} />
-        <Form.Input placeholder="Date" value={activity.date} name='date' onChange={handleInputChange} />
-        <Form.Input placeholder="City" value={activity.city} name='city' onChange={handleInputChange} />
-        <Form.Input placeholder="Venue" value={activity.venue} name='venue' onChange={handleInputChange}  />
-        <Button floated="right" positive type="submit" content="Submit" />
-        <Button floated="right" type="button" content="Cancel" onClick={closeForm}/>
-      </Form>
-    </Segment>
-  )
-}
+	return (
+		<Segment clearing>
+			<Form onSubmit={handleSubmit} autoComplete="off">
+				<Form.Input placeholder="Title" value={activity.title} name="title" onChange={handleInputChange} />
+				<Form.TextArea
+					placeholder="Description"
+					value={activity.description}
+					name="description"
+					onChange={handleInputChange}
+				/>
+				<Form.Input placeholder="Category" value={activity.category} name="category" onChange={handleInputChange} />
+				<Form.Input type="date" placeholder="Date" value={activity.date} name="date" onChange={handleInputChange} />
+				<Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
+				<Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
+				<Button loading={submitting} floated="right" positive type="submit" content="Submit" />
+				<Button floated="right" type="button" content="Cancel" onClick={closeForm} />
+			</Form>
+		</Segment>
+	);
+};
