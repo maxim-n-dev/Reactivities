@@ -15,8 +15,7 @@ export const ActivityForm = observer(() => {
 	const { activityStore } = useStore();
     const { 
             selectedActivity, 
-            loadActivity, 
-            loading, 
+            loadActivity,
             loadingInitial, 
             createActivity, 
             updateActivity 
