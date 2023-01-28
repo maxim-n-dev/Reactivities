@@ -1,13 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { NavLink } from "react-router-dom";
 import { Button, Container, Menu } from "semantic-ui-react";
-import { useStore } from "../stores/store";
-
 
 export default observer( function Navbar() {
-
-  const { activityStore } = useStore();
-  const { openForm } = activityStore;
 
   return (
     <Menu inverted fixed='top'>
