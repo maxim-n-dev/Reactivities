@@ -4,19 +4,16 @@ import { Grid } from "semantic-ui-react";
 import { LoadingComponent } from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 import { ActivityList } from "./ActivityList";
-
+import { ActivityFilters } from './ActivityFilters';
 
 export default observer(function ActivityDashboard() {
-
 	const { activityStore } = useStore();
 
 	useEffect(() => {
-        if(activityStore.activityRegistry.size <= 1) activityStore.loadActivities();
+		if (activityStore.activityRegistry.size <= 1) activityStore.loadActivities();
 	}, [activityStore]);
 
-
-	 if (activityStore.loadingInitial)  return <LoadingComponent content="Loading app" />;
-
+	if (activityStore.loadingInitial) return <LoadingComponent content="Loading app" />;
 
 	return (
 		<Grid>
@@ -24,7 +21,7 @@ export default observer(function ActivityDashboard() {
 				<ActivityList />
 			</Grid.Column>
 			<Grid.Column width={6}>
-                <h2>Activity filters</h2>
+				<ActivityFilters />
 			</Grid.Column>
 		</Grid>
 	);
