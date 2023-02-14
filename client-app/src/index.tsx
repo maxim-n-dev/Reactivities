@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import 'react-calendar/dist/Calendar.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import 'semantic-ui-css/semantic.min.css';
 import './app/layout/styles.css';
 import reportWebVitals from './reportWebVitals';
